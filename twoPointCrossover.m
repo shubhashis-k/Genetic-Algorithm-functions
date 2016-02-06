@@ -42,30 +42,25 @@ for run = 1:runEnd
         
         
         
-%%N point Crossover%%%
-n = 2;
-crossoverPoints = zeros(10,n+2);
-crossoverPoints(:,1) = 1;
-crossoverPoints(:,n+2) = PopLength;
-crossoverPoints(:,2:n+1) = sort(randi([2,PopLength-1],PopLength,n),2);
-SelectedForCrossover = randi([1,PopLength],PopLength,2);
+%%Two point Crossover%%%%
+SelectedForCrossover = randi(PopLength, PopLength, 2);
+CrossoverPoints = zeros(10,2);
+CrossoverPoints(:,1) = randi(IndLength,PopLength,1);
+CrossoverPoints(:,2) = randi(IndLength,PopLength,1);
 
-crossoverPossibilities = rand(PopLength,1);
-crossoverchance = .25;
+CrossoverPoints = sort(CrossoverPoints,2);
 
-for(i=1:1:PopLength)
-    if(crossoverPossibilities(i) < crossoverchance)
-        for(j = 2:1:n+2)
-            gene1 = SelectedForCrossover(i,1);
-            gene2 = SelectedForCrossover(i,2);
-            pos1 = crossoverPoints(i,j-1);
-            pos2 = crossoverPoints(i,j);
-            [SelectedPop(gene1,pos1:pos2), SelectedPop(gene2,pos1:pos2)] = deal(SelectedPop(gene2,pos1:pos2), SelectedPop(gene1,pos1:pos2));
-        end
+CrossoverChance = rand(10,1);
+Chance = .25;
+for(i = 1:1:PopLength)
+    if(CrossoverChance(i) < Chance)
+        gene1 = SelectedForCrossover(i,1);
+        gene2 = SelectedForCrossover(i,2);
+        p1 = CrossoverPoints(i,1);
+        p2 = CrossoverPoints(i,2);
+        [SelectedPop(gene1,p1:p2),SelectedPop(gene2,p1:p2)] = deal(SelectedPop(gene2,p1:p2),SelectedPop(gene1,p1:p2));
     end
 end
-        
-        
         
         
         
